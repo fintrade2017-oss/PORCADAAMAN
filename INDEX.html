@@ -1,0 +1,1116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AMAN RESORTS · La Porcada Ecoresort · TAKYMA INVESTMENT PIONEER 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Montserrat:wght@200;300;400;500;600&family=Noto+Serif+SC:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --gold:#D4AF37;
+    --gold-light:#E8C766;
+    --gold-deep:#9E7C2A;
+    --black:#050505;
+    --black-soft:#0E0E0E;
+    --ivory:#FBF9F5;
+    --stone:#8C867D;
+    --serif:'Cormorant Garamond','Noto Serif SC',serif;
+    --display:'Cinzel','Noto Serif SC',serif;
+    --sans:'Montserrat','Noto Serif SC',sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{height:100%;background:#000;color:var(--ivory);font-family:var(--serif);overflow:hidden;-webkit-font-smoothing:antialiased}
+
+  /* ===== BACKGROUND VIDEO ===== */
+  #bgVideo{
+    position:fixed;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;
+    filter:brightness(0.82) saturate(1.18) contrast(1.06);
+  }
+  #videoFallback{
+    position:fixed;inset:0;z-index:0;background:
+      radial-gradient(ellipse at 50% 45%, rgba(30,22,8,0.4) 0%, rgba(0,0,0,0.9) 75%),
+      linear-gradient(135deg,#050402 0%,#0e0b06 50%,#050402 100%);
+    display:block;
+  }
+
+  /* ===== AUDIO ===== */
+  #bgMusic{display:none}
+
+  /* ===== LANGUAGE SELECTOR ===== */
+  #langGate{
+    position:fixed;inset:0;z-index:1000;
+    background:radial-gradient(ellipse at center, rgba(10,8,4,0.3) 0%, rgba(0,0,0,0.72) 75%);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    transition:opacity 1s ease;
+  }
+  #langGate .top-logos{display:flex;gap:60px;align-items:center;margin-bottom:60px;opacity:0.85}
+  #langGate .top-logos img{height:70px;filter:brightness(0) invert(1) sepia(1) saturate(5) hue-rotate(2deg)}
+  #langGate h1{
+    font-family:var(--display);font-size:clamp(28px,5vw,56px);
+    letter-spacing:0.4em;color:var(--gold);text-align:center;
+    text-shadow:0 2px 20px rgba(0,0,0,0.9), 0 0 30px rgba(212,175,55,0.4);margin-bottom:10px;font-weight:500;
+  }
+  #langGate .sub{
+    font-family:var(--sans);font-size:clamp(10px,1.4vw,14px);letter-spacing:0.6em;
+    color:var(--stone);text-transform:uppercase;margin-bottom:80px;
+  }
+  #langGate .lang-row{display:flex;gap:24px;flex-wrap:wrap;justify-content:center}
+  .lang-btn{
+    background:rgba(10,8,4,0.55);border:1px solid rgba(212,175,55,0.35);
+    color:var(--gold);padding:22px 50px;cursor:pointer;
+    font-family:var(--display);font-size:16px;letter-spacing:0.3em;
+    transition:all .5s ease;backdrop-filter:blur(6px);
+    min-width:220px;
+  }
+  .lang-btn .flag{display:block;font-size:30px;margin-bottom:8px}
+  .lang-btn .lbl{display:block;font-size:11px;letter-spacing:0.2em;color:var(--stone);margin-top:6px;font-family:var(--sans)}
+  .lang-btn:hover{background:rgba(212,175,55,0.15);border-color:var(--gold);transform:translateY(-4px);box-shadow:0 12px 40px rgba(212,175,55,0.25)}
+  #langGate .copyright{
+    position:absolute;bottom:30px;font-family:var(--sans);font-size:10px;letter-spacing:0.3em;
+    color:var(--stone);text-transform:uppercase;
+  }
+
+  /* ===== PRESENTATION (ROLLO DE PAPEL / SCROLL) ===== */
+  #stage{
+    position:fixed;inset:0;z-index:10;display:none;
+    overflow-y:auto;overflow-x:hidden;
+    scroll-behavior:smooth;
+  }
+  #stage::-webkit-scrollbar{width:8px}
+  #stage::-webkit-scrollbar-track{background:rgba(0,0,0,0.4)}
+  #stage::-webkit-scrollbar-thumb{background:linear-gradient(180deg,var(--gold),var(--gold-deep));border-radius:4px}
+
+  .slide{
+    position:relative;min-height:100vh;display:flex;
+    padding:120px 110px 140px;flex-direction:column;justify-content:center;
+    background:linear-gradient(180deg, rgba(0,0,0,0.42) 0%, rgba(0,0,0,0.18) 30%, rgba(0,0,0,0.18) 70%, rgba(0,0,0,0.55) 100%);
+    border-bottom:1px solid rgba(212,175,55,0.08);
+    opacity:0;transform:translateY(60px);
+    transition:opacity 1s ease, transform 1s ease;
+  }
+  .slide.revealed{opacity:1;transform:translateY(0)}
+  .slide.cover{padding-top:100px}
+
+  /* Scroll progress bar */
+  #scrollProgress{
+    position:fixed;top:0;left:0;height:3px;width:0%;
+    background:linear-gradient(90deg,var(--gold-deep),var(--gold),var(--gold-light));
+    z-index:60;box-shadow:0 0 12px rgba(212,175,55,0.6);transition:width .1s linear;
+  }
+
+  /* Scroll hint (down arrow) */
+  .scroll-hint{
+    position:absolute;bottom:30px;left:50%;transform:translateX(-50%);
+    font-family:var(--sans);font-size:10px;letter-spacing:0.4em;color:var(--gold);
+    text-transform:uppercase;text-align:center;animation:bob 2.2s ease-in-out infinite;
+    text-shadow:0 1px 8px rgba(0,0,0,0.9);
+  }
+  .scroll-hint .arrow{display:block;font-size:18px;margin-top:6px;color:var(--gold)}
+  @keyframes bob{0%,100%{transform:translateX(-50%) translateY(0);opacity:0.7}50%{transform:translateX(-50%) translateY(8px);opacity:1}}
+
+  .slide-num{
+    position:absolute;top:36px;left:50px;font-family:var(--display);
+    font-size:13px;letter-spacing:0.5em;color:var(--gold-deep);
+  }
+  .slide-kicker{
+    font-family:var(--sans);font-size:11px;letter-spacing:0.6em;text-transform:uppercase;
+    color:var(--gold);margin-bottom:18px;
+    text-shadow:0 1px 6px rgba(0,0,0,0.8);
+  }
+  .slide-title{
+    font-family:var(--display);font-size:clamp(34px,4.6vw,68px);letter-spacing:0.08em;
+    color:var(--ivory);font-weight:500;line-height:1.1;margin-bottom:14px;
+    text-shadow:0 2px 18px rgba(0,0,0,0.85), 0 0 30px rgba(0,0,0,0.6);
+  }
+  .slide-title em{color:var(--gold);font-style:normal}
+  .divider{width:80px;height:1px;background:linear-gradient(90deg,var(--gold),transparent);margin:20px 0 30px}
+  .slide-body{
+    font-family:var(--serif);font-size:clamp(15px,1.5vw,21px);line-height:1.7;
+    color:rgba(251,249,245,0.92);max-width:1100px;font-weight:300;
+    text-shadow:0 1px 8px rgba(0,0,0,0.85), 0 0 16px rgba(0,0,0,0.5);
+  }
+  .slide-body p{margin-bottom:16px}
+  .slide-body strong{color:var(--gold-light);font-weight:500}
+
+  /* Cover */
+  .cover{align-items:center;text-align:center;padding:60px}
+  .cover .logos{display:flex;gap:70px;align-items:center;margin-bottom:50px;opacity:0.9}
+  .cover .logos img{height:90px;filter:brightness(0) invert(1) sepia(1) saturate(6) hue-rotate(2deg) brightness(1.1)}
+  .cover .kicker{font-family:var(--sans);font-size:12px;letter-spacing:0.7em;color:var(--gold);text-transform:uppercase;margin-bottom:24px}
+  .cover h1{
+    font-family:var(--display);font-size:clamp(48px,7vw,110px);letter-spacing:0.18em;
+    color:var(--ivory);font-weight:500;text-shadow:0 0 50px rgba(212,175,55,0.35);
+  }
+  .cover h1 span{display:block;font-size:0.5em;letter-spacing:0.4em;color:var(--gold);margin-top:18px}
+  .cover .tagline{
+    font-family:var(--serif);font-style:italic;font-size:clamp(16px,1.8vw,24px);
+    color:var(--stone);margin-top:36px;max-width:700px;line-height:1.6;
+  }
+  .cover .takyma{
+    position:absolute;bottom:50px;font-family:var(--sans);font-size:11px;letter-spacing:0.5em;
+    color:var(--gold-deep);text-transform:uppercase;
+  }
+
+  /* Two columns */
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:start}
+  .col-card{
+    background:rgba(10,8,4,0.68);border:1px solid rgba(212,175,55,0.2);
+    padding:34px 38px;backdrop-filter:blur(10px);
+  }
+  .col-card h3{font-family:var(--display);font-size:18px;letter-spacing:0.2em;color:var(--gold);margin-bottom:16px}
+  .col-card p{font-family:var(--serif);font-size:17px;line-height:1.65;color:rgba(251,249,245,0.82)}
+
+  /* Pillars grid */
+  .pillars{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;margin-top:10px}
+  .pillar{
+    border-left:2px solid var(--gold);padding:18px 24px;background:rgba(10,8,4,0.6);
+  }
+  .pillar h4{font-family:var(--display);font-size:14px;letter-spacing:0.2em;color:var(--gold);margin-bottom:10px}
+  .pillar p{font-family:var(--serif);font-size:15px;line-height:1.55;color:rgba(251,249,245,0.78)}
+
+  /* Table */
+  .am-table{width:100%;border-collapse:collapse;margin-top:10px;font-family:var(--sans);font-size:13px}
+  .am-table th{
+    text-align:left;padding:16px 18px;border-bottom:1px solid var(--gold);
+    color:var(--gold);font-weight:500;letter-spacing:0.15em;text-transform:uppercase;font-size:11px;
+  }
+  .am-table td{padding:18px;border-bottom:1px solid rgba(212,175,55,0.12);color:rgba(251,249,245,0.92);font-family:var(--serif);font-size:15px;text-shadow:0 1px 6px rgba(0,0,0,0.7)}
+  .am-table td:first-child{color:var(--gold-light);font-family:var(--display);font-size:13px;letter-spacing:0.1em}
+  .am-table tr:hover{background:rgba(212,175,55,0.04)}
+
+  /* Stats */
+  .stats-row{display:flex;gap:60px;margin:30px 0;flex-wrap:wrap}
+  .stat{text-align:left}
+  .stat .num{font-family:var(--display);font-size:54px;color:var(--gold);letter-spacing:0.05em}
+  .stat .lbl{font-family:var(--sans);font-size:11px;letter-spacing:0.3em;color:var(--stone);text-transform:uppercase;margin-top:6px}
+
+  /* La Porcada */
+  .porcada-hero{text-align:center}
+  .porcada-hero .ecoresort-logo{margin:0 auto 30px;display:block;height:120px;filter:brightness(0) invert(1) sepia(1) saturate(6) hue-rotate(2deg)}
+  .porcada-hero h1{
+    font-family:var(--display);font-size:clamp(40px,6vw,90px);letter-spacing:0.2em;
+    color:var(--gold);text-shadow:0 0 40px rgba(212,175,55,0.4);
+  }
+  .porcada-hero .sub{font-family:var(--sans);font-size:13px;letter-spacing:0.6em;color:var(--stone);text-transform:uppercase;margin-top:20px}
+  .porcada-hero .offer{font-family:var(--serif);font-style:italic;font-size:22px;color:var(--ivory);max-width:800px;margin:40px auto;line-height:1.6}
+
+  /* Password modal */
+  #passModal{
+    position:fixed;inset:0;z-index:2000;display:none;align-items:center;justify-content:center;
+    background:rgba(0,0,0,0.92);backdrop-filter:blur(12px);
+  }
+  #passModal.active{display:flex}
+  .pass-box{
+    background:linear-gradient(160deg, rgba(20,15,5,0.95), rgba(0,0,0,0.95));
+    border:1px solid var(--gold);padding:60px 70px;text-align:center;max-width:520px;
+    box-shadow:0 0 80px rgba(212,175,55,0.2);
+  }
+  .pass-box .lock{font-size:40px;color:var(--gold);margin-bottom:18px}
+  .pass-box h3{font-family:var(--display);font-size:22px;letter-spacing:0.3em;color:var(--gold);margin-bottom:10px}
+  .pass-box .who{font-family:var(--sans);font-size:11px;letter-spacing:0.3em;color:var(--stone);text-transform:uppercase;margin-bottom:30px}
+  .pass-box input{
+    width:100%;background:rgba(0,0,0,0.6);border:1px solid rgba(212,175,55,0.4);
+    color:var(--gold);padding:16px 20px;font-family:var(--sans);font-size:15px;letter-spacing:0.2em;
+    text-align:center;margin-bottom:14px;outline:none;
+  }
+  .pass-box input:focus{border-color:var(--gold)}
+  .pass-box button{
+    background:transparent;border:1px solid var(--gold);color:var(--gold);
+    padding:14px 40px;font-family:var(--display);font-size:13px;letter-spacing:0.3em;
+    cursor:pointer;transition:all .4s;width:100%;
+  }
+  .pass-box button:hover{background:var(--gold);color:#000}
+  .pass-box .err{color:#c0392b;font-family:var(--sans);font-size:11px;margin-top:14px;min-height:14px;letter-spacing:0.15em}
+  .pass-box .hint{color:var(--stone);font-family:var(--sans);font-size:10px;letter-spacing:0.2em;margin-top:18px}
+
+  /* Contact block */
+  .contact-block{
+    background:rgba(10,8,4,0.7);border-left:3px solid var(--gold);
+    padding:30px 40px;margin-top:20px;backdrop-filter:blur(8px);
+  }
+  .contact-block .line{font-family:var(--serif);font-size:16px;color:rgba(251,249,245,0.88);margin-bottom:8px;line-height:1.6}
+  .contact-block .line strong{color:var(--gold-light);letter-spacing:0.1em;font-family:var(--sans);font-size:12px;text-transform:uppercase;display:inline-block;min-width:120px}
+  .contact-block a{color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(212,175,55,0.3)}
+
+  /* Closing */
+  .closing{align-items:center;text-align:center}
+  .closing .takyma-big{
+    font-family:var(--display);font-size:clamp(28px,4vw,52px);letter-spacing:0.3em;color:var(--gold);
+    text-shadow:0 0 40px rgba(212,175,55,0.3);margin-bottom:16px;
+  }
+  .closing .role{font-family:var(--sans);font-size:13px;letter-spacing:0.6em;color:var(--stone);text-transform:uppercase;margin-bottom:50px}
+  .closing .copy{font-family:var(--display);font-size:18px;letter-spacing:0.3em;color:var(--ivory)}
+  .closing .year{display:block;color:var(--gold);font-size:42px;letter-spacing:0.2em;margin-top:14px}
+  .closing .logos{display:flex;gap:60px;justify-content:center;margin-top:60px;opacity:0.85}
+  .closing .logos img{height:70px;filter:brightness(0) invert(1) sepia(1) saturate(6) hue-rotate(2deg)}
+
+  /* Nav */
+  #nav{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:50;display:flex;align-items:center;gap:18px;background:rgba(0,0,0,0.5);padding:12px 22px;border:1px solid rgba(212,175,55,0.25);backdrop-filter:blur(8px)}
+  #nav button{background:none;border:none;color:var(--gold);font-family:var(--display);font-size:18px;cursor:pointer;padding:4px 10px;letter-spacing:0.2em;transition:all .3s}
+  #nav button:hover{color:var(--gold-light)}
+  #nav .counter{font-family:var(--sans);font-size:11px;letter-spacing:0.2em;color:var(--stone)}
+  #nav .dots{display:flex;gap:6px}
+  #nav .dot{width:7px;height:7px;border-radius:50%;background:rgba(212,175,55,0.25);cursor:pointer;transition:all .3s}
+  #nav .dot.active{background:var(--gold);transform:scale(1.3)}
+
+  /* Top bar */
+  #topbar{position:fixed;top:0;left:0;right:0;z-index:40;display:flex;justify-content:space-between;align-items:center;padding:22px 50px;background:linear-gradient(180deg,rgba(0,0,0,0.7),transparent)}
+  #topbar .brand{font-family:var(--display);font-size:13px;letter-spacing:0.5em;color:var(--gold)}
+  #topbar .brand span{color:var(--stone)}
+  #topbar .controls{display:flex;gap:14px;align-items:center}
+  #topbar .controls button{background:none;border:1px solid rgba(212,175,55,0.3);color:var(--gold);width:34px;height:34px;border-radius:50%;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;transition:all .3s}
+  #topbar .controls button:hover{background:rgba(212,175,55,0.15);border-color:var(--gold)}
+  #topbar .lang-tag{font-family:var(--sans);font-size:10px;letter-spacing:0.3em;color:var(--stone);text-transform:uppercase}
+
+  /* Audio mute icon */
+  .muted .icon-vol::after{content:"/";color:#c0392b}
+
+  /* Locked slide teaser */
+  .locked-cover{text-align:center}
+  .locked-cover .lock-icon{font-size:60px;color:var(--gold);margin-bottom:24px;opacity:0.7}
+  .locked-cover h2{font-family:var(--display);font-size:36px;letter-spacing:0.3em;color:var(--ivory);margin-bottom:14px}
+  .locked-cover .name{font-family:var(--serif);font-style:italic;font-size:24px;color:var(--gold);margin-bottom:30px}
+  .locked-cover p{font-family:var(--sans);font-size:13px;letter-spacing:0.2em;color:var(--stone);text-transform:uppercase;line-height:1.8}
+  .locked-cover .enter-btn{
+    margin-top:40px;background:transparent;border:1px solid var(--gold);color:var(--gold);
+    padding:16px 50px;font-family:var(--display);font-size:14px;letter-spacing:0.3em;cursor:pointer;transition:all .4s;
+  }
+  .locked-cover .enter-btn:hover{background:var(--gold);color:#000}
+
+  /* Vladi content (revealed) */
+  .vladi-reveal{display:none}
+  .vladi-reveal.active{display:flex}
+  .vladi-portrait{
+    text-align:center;margin-bottom:22px;
+  }
+  .vladi-portrait img{
+    width:160px;height:160px;object-fit:cover;object-position:center top;
+    border:2px solid var(--gold);padding:4px;background:rgba(0,0,0,0.4);
+    box-shadow:0 0 30px rgba(212,175,55,0.25);display:block;margin:0 auto;
+    filter:sepia(0.15) brightness(0.95);
+  }
+  .vladi-portrait .caption{
+    font-family:var(--display);font-size:11px;letter-spacing:0.3em;color:var(--gold);
+    margin-top:12px;text-transform:uppercase;
+  }
+  .vladi-portrait .caption-role{
+    font-family:var(--sans);font-size:9px;letter-spacing:0.25em;color:var(--stone);
+    margin-top:4px;text-transform:uppercase;
+  }
+  .vladi-web{
+    display:inline-flex;align-items:center;gap:8px;margin-top:14px;
+    padding:9px 18px;border:1px solid var(--gold);
+    font-family:var(--display);font-size:11px;letter-spacing:0.18em;
+    color:var(--gold);text-decoration:none;text-transform:lowercase;
+    background:rgba(212,175,55,0.06);transition:all .4s ease;
+  }
+  .vladi-web:hover{
+    background:var(--gold);color:#000;box-shadow:0 0 24px rgba(212,175,55,0.4);
+  }
+  .vladi-web .vw-icon{font-size:9px;opacity:0.8}
+  .vladi-web-prominent{
+    margin-top:24px;padding:14px 32px;font-size:13px;letter-spacing:0.25em;
+    text-transform:uppercase;border-width:1px;
+    box-shadow:0 0 18px rgba(212,175,55,0.15);
+  }
+  .vladi-web-prominent .vw-icon{font-size:11px}
+
+  /* CTA Links */
+  .cta-row{
+    display:flex;gap:24px;justify-content:center;flex-wrap:wrap;margin-top:30px;
+  }
+  .cta-btn{
+    display:inline-flex;flex-direction:column;align-items:center;gap:6px;
+    padding:22px 36px;border:1px solid var(--gold);
+    background:rgba(212,175,55,0.05);text-decoration:none;
+    transition:all .45s ease;backdrop-filter:blur(6px);min-width:280px;
+  }
+  .cta-btn:hover{
+    background:var(--gold);box-shadow:0 12px 40px rgba(212,175,55,0.35);transform:translateY(-4px);
+  }
+  .cta-btn .cta-icon{font-size:18px;color:var(--gold);transition:color .45s}
+  .cta-btn:hover .cta-icon{color:#000}
+  .cta-btn .cta-label{
+    font-family:var(--display);font-size:14px;letter-spacing:0.25em;color:var(--gold);
+    text-transform:uppercase;transition:color .45s;
+  }
+  .cta-btn:hover .cta-label{color:#000}
+  .cta-btn .cta-url{
+    font-family:var(--sans);font-size:10px;letter-spacing:0.1em;color:var(--stone);
+    text-transform:lowercase;transition:color .45s;
+  }
+  .cta-btn:hover .cta-url{color:#1a1a1a}
+  .cta-heading{
+    text-align:center;font-family:var(--sans);font-size:11px;letter-spacing:0.5em;
+    color:var(--stone);text-transform:uppercase;margin-bottom:6px;
+  }
+  .timeline{position:relative;padding-left:30px}
+  .timeline::before{content:"";position:absolute;left:8px;top:0;bottom:0;width:1px;background:linear-gradient(180deg,var(--gold),transparent)}
+  .tl-item{position:relative;margin-bottom:24px}
+  .tl-item::before{content:"";position:absolute;left:-26px;top:8px;width:9px;height:9px;background:var(--gold);border-radius:50%;box-shadow:0 0 12px var(--gold)}
+  .tl-item .year{font-family:var(--display);font-size:14px;letter-spacing:0.2em;color:var(--gold);margin-bottom:4px}
+  .tl-item .txt{font-family:var(--serif);font-size:15px;line-height:1.55;color:rgba(251,249,245,0.82)}
+
+  @media (max-width:900px){
+    .slide{padding:80px 30px 90px}
+    .two-col,.pillars{grid-template-columns:1fr;gap:20px}
+    .cover .logos,.closing .logos{flex-direction:column;gap:24px}
+    #langGate .top-logos{flex-direction:column;gap:24px}
+    .stats-row{gap:30px}
+    .am-table{font-size:11px}
+    .am-table td{padding:12px 8px;font-size:13px}
+  }
+</style>
+</head>
+<body>
+
+<!-- Background video -->
+<div id="videoFallback"></div>
+<video id="bgVideo" autoplay muted loop playsinline preload="auto">
+  <source src="video/PORCADAY1.MP4" type="video/mp4">
+</video>
+
+<!-- Background music -->
+<audio id="bgMusic" loop preload="auto">
+  <source src="music/WHEEL OF TIME.MP3" type="audio/mpeg">
+</audio>
+
+<!-- ============ LANGUAGE GATE ============ -->
+<div id="langGate">
+  <div class="top-logos">
+    <img src="images/logo.png" alt="Aman" onerror="this.style.display='none'">
+    <img src="images/ecoresort.png" alt="Ecoresort" onerror="this.style.display='none'">
+  </div>
+  <h1>AMAN&nbsp;&nbsp;RESORTS</h1>
+  <div class="sub" data-i18n="gate_sub">Seleccione su idioma · Select your language · Выберите язык</div>
+  <div class="lang-row">
+    <button class="lang-btn" data-lang="es">
+      <span class="flag">🇪🇸</span>
+      ESPAÑOL
+      <span class="lbl">Entrar</span>
+    </button>
+    <button class="lang-btn" data-lang="en">
+      <span class="flag">🇬🇧</span>
+      ENGLISH
+      <span class="lbl">Enter</span>
+    </button>
+    <button class="lang-btn" data-lang="ru">
+      <span class="flag">🇷🇺</span>
+      РУССКИЙ
+      <span class="lbl">Войти</span>
+    </button>
+  </div>
+  <div class="copyright">TAKYMA INVESTMENT PIONEER · COPYRIGHT 2026</div>
+</div>
+
+<!-- Scroll progress bar -->
+<div id="scrollProgress"></div>
+
+<!-- ============ STAGE ============ -->
+<div id="stage">
+
+  <!-- Top bar -->
+  <div id="topbar">
+    <div class="brand">AMAN <span>·</span> <span id="brandSub">LA PORCADA</span></div>
+    <div class="controls">
+      <span class="lang-tag" id="langTag">ES</span>
+      <button id="btnMute" title="Mute / Unmute"><span class="icon-vol">♪</span></button>
+      <button id="btnHome" title="Restart">⌂</button>
+    </div>
+  </div>
+
+  <!-- Slide 1: COVER -->
+  <section class="slide cover" data-slide="1">
+    <div class="logos">
+      <img src="images/logo.png" alt="Aman" onerror="this.style.display='none'">
+      <img src="images/ecoresort.png" alt="Ecoresort" onerror="this.style.display='none'">
+    </div>
+    <div class="kicker" data-i18n="cover_kicker">PRESENTACIÓN EJECUTIVA · ULTRA-LUJO</div>
+    <h1>AMAN RESORTS<span data-i18n="cover_sub">LA PORCADA · ECORESORT</span></h1>
+    <div class="tagline" data-i18n="cover_tagline">"Un lugar de paz" — donde la naturaleza, el silencio y la exclusividad se funden en una experiencia sin precedentes.</div>
+    <div class="takyma">PROMOTOR · TAKYMA INVESTMENT PIONEER</div>
+    <div class="scroll-hint"><span data-i18n="scroll_hint">Desplazar para explorar</span><span class="arrow">↓</span></div>
+  </section>
+
+  <!-- Slide 2: ORIGEN -->
+  <section class="slide" data-slide="2">
+    <div class="slide-num">01</div>
+    <div class="slide-kicker" data-i18n="origin_kicker">CAPÍTULO I</div>
+    <h2 class="slide-title" data-i18n="origin_title">Origen de la <em>Firma</em></h2>
+    <div class="divider"></div>
+    <div class="slide-body">
+      <p><strong data-i18n="origin_fund">Fundación:</strong> <span data-i18n="origin_fund_t">Nació en 1988 con la apertura de su primer establecimiento, Amanpuri (que significa "lugar de paz"), situado en la isla de Phuket, Tailandia.</span></p>
+      <p><strong data-i18n="origin_creador">Creador:</strong> <span data-i18n="origin_creador_t">Fue fundado por el visionario hotelero indonés-asiático Adrian Zecha, con el objetivo de romper con los grandes complejos hoteleros estandarizados y ofrecer un concepto totalmente revolucionario: la hospitalidad ultra-privada en formato de refugio residencial.</span></p>
+      <p><strong data-i18n="origin_actual">Actualidad:</strong> <span data-i18n="origin_actual_t">Desde 2014, el grupo está bajo el control del inversor y empresario Vladislav Doronin (presidente y consejero delegado de Aman Group).</span></p>
+      <div class="stats-row">
+        <div class="stat"><div class="num">1988</div><div class="lbl" data-i18n="stat_founded">Fundación</div></div>
+        <div class="stat"><div class="num">36</div><div class="lbl" data-i18n="stat_props">Propiedades</div></div>
+        <div class="stat"><div class="num">20</div><div class="lbl" data-i18n="stat_countries">Países</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Slide 3: JANU -->
+  <section class="slide" data-slide="3">
+    <div class="slide-num">02</div>
+    <div class="slide-kicker" data-i18n="janu_kicker">NUEVA MARCA DE BIENESTAR</div>
+    <h2 class="slide-title">JANU <em data-i18n="janu_em">— "Alma"</em></h2>
+    <div class="divider"></div>
+    <div class="slide-body">
+      <p data-i18n="janu_p1">Para complementar la filosofía de calma y aislamiento de Aman, el grupo lanzó Janu (que significa "alma" en sánscrito). Mientras que Aman se centra en el retiro, la paz y la introspección, Janu promueve la conexión social, la vitalidad y el dinamismo integral del cuerpo y la mente, incorporando centros de bienestar gigantescos.</p>
+      <div class="two-col" style="margin-top:24px">
+        <div class="col-card">
+          <h3 data-i18n="janu_flag">Buque Insignia</h3>
+          <p data-i18n="janu_flag_t">Janu Tokyo, en el distrito de Azabudai Hills (Japón). Cuenta con 122 habitaciones y suites y un centro de bienestar de vanguardia de 4.000 m².</p>
+        </div>
+        <div class="col-card">
+          <h3 data-i18n="janu_pos">Posición Actual</h3>
+          <p data-i18n="janu_pos_t">Aunque hay más proyectos planeados a nivel global, Janu Tokyo continúa siendo el único operando bajo la marca, consolidándola como referente del bienestar de ultra-lujo.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Slide 4: FILOSOFIA -->
+  <section class="slide" data-slide="4">
+    <div class="slide-num">03</div>
+    <div class="slide-kicker" data-i18n="phil_kicker">FILOSOFÍA EMPRESARIAL</div>
+    <h2 class="slide-title" data-i18n="phil_title">Pilares de la <em>Marca</em></h2>
+    <div class="divider"></div>
+    <div class="pillars">
+      <div class="pillar">
+        <h4 data-i18n="p1_h">El Anti-Hotel</h4>
+        <p data-i18n="p1_t">Hogar privado. Los espacios están concebidos para que los huéspedes no sientan que están en un hotel comercial, sino en una residencia privada de extrema elegancia.</p>
+      </div>
+      <div class="pillar">
+        <h4 data-i18n="p2_h">Baja Densidad</h4>
+        <p data-i18n="p2_t">Exclusividad absoluta. Resorts con número muy reducido de habitaciones para asegurar una ratio de personal por cliente altísima.</p>
+      </div>
+      <div class="pillar">
+        <h4 data-i18n="p3_h">Sense of Place</h4>
+        <p data-i18n="p3_t">Inmersión en el entorno. La arquitectura —diseñada por maestros como Ed Tuttle o Kerry Hill— respeta e integra la cultura local y la naturaleza del destino.</p>
+      </div>
+      <div class="pillar">
+        <h4 data-i18n="p4_h">Marca sobre Ocupación</h4>
+        <p data-i18n="p4_t">Aman prioriza de forma estricta la integridad de sus tarifas y su exclusividad frente a la maximización de la ocupación por volumen.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Slide 5: MODELO -->
+  <section class="slide" data-slide="5">
+    <div class="slide-num">04</div>
+    <div class="slide-kicker" data-i18n="model_kicker">DESARROLLO Y CATEGORÍA</div>
+    <h2 class="slide-title" data-i18n="model_title">Modelo de <em>Negocio</em></h2>
+    <div class="divider"></div>
+    <div class="slide-body">
+      <p><strong data-i18n="model_cat">Categoría:</strong> <span data-i18n="model_cat_t">Ultra-lujo — segmento superior al lujo convencional, enfocado en clientes de alto poder adquisitivo que buscan total discreción, anonimato y servicio hiper-personalizado.</span></p>
+      <p><strong data-i18n="model_op">Modelo Operativo:</strong> <span data-i18n="model_op_t">Combina la propiedad directa de activos estratégicos con la gestión de marcas y copropiedades en colaboración con socios inmobiliarios e inversores privados de primer nivel.</span></p>
+      <p><strong data-i18n="model_red">Red Global:</strong> <span data-i18n="model_red_t">El portfolio internacional cuenta con aproximadamente 36 propiedades repartidas en cerca de 20 países, incluyendo resorts de playa, retiros en la naturaleza y hoteles urbanos selectos.</span></p>
+      <div class="stats-row">
+        <div class="stat"><div class="num">Ultra-Lux</div><div class="lbl" data-i18n="stat_cat">Categoría</div></div>
+        <div class="stat"><div class="num">HMA</div><div class="lbl" data-i18n="stat_hma">Contrato Gestión</div></div>
+        <div class="stat"><div class="num">VIP</div><div class="lbl" data-i18n="stat_vip">Cliente Objetivo</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Slide 6: COMPLEJOS TABLE -->
+  <section class="slide" data-slide="6">
+    <div class="slide-num">05</div>
+    <div class="slide-kicker" data-i18n="props_kicker">RED GLOBAL</div>
+    <h2 class="slide-title" data-i18n="props_title">Complejos <em>Principales</em></h2>
+    <div class="divider"></div>
+    <table class="am-table">
+      <thead>
+        <tr>
+          <th data-i18n="th_prop">Complejo</th>
+          <th data-i18n="th_loc">Ubicación</th>
+          <th data-i18n="th_cat">Categoría</th>
+          <th data-i18n="th_cap">Capacidad</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Amanpuri</td><td data-i18n="r1_l">Phuket, Tailandia</td><td data-i18n="r1_c">Resort de Playa / Isla</td><td data-i18n="r1_cap">~40 pabellones y villas</td></tr>
+        <tr><td>Aman Le Mélézin</td><td data-i18n="r2_l">Courchevel, Francia</td><td data-i18n="r2_c">Resort Alpino de Lujo</td><td data-i18n="r2_cap">~31 habitaciones y suites</td></tr>
+        <tr><td>Amanemu</td><td data-i18n="r3_l">Ise-Shima, Japón</td><td data-i18n="r3_c">Onsen · Aguas Termales</td><td data-i18n="r3_cap">~30 suites y 4 villas</td></tr>
+        <tr><td>Amandari</td><td data-i18n="r4_l">Bali, Indonesia</td><td data-i18n="r4_c">Resort Cultural / Interior</td><td data-i18n="r4_cap">~30 suites</td></tr>
+        <tr><td>Aman Sveti Stefan</td><td data-i18n="r5_l">Montenegro</td><td data-i18n="r5_c">Isla fortificada histórica</td><td data-i18n="r5_cap">~50 habitaciones y suites</td></tr>
+        <tr><td>Aman New York</td><td data-i18n="r6_l">Nueva York, EE.UU.</td><td data-i18n="r6_c">Hotel Urbano Ultra-lujo</td><td data-i18n="r6_cap">~83 suites</td></tr>
+        <tr><td>Janu Tokyo</td><td data-i18n="r7_l">Tokio, Japón</td><td data-i18n="r7_c">Urbano / Wellness</td><td data-i18n="r7_cap">122 habitaciones y suites</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Slide 7: VLADISLAV — LOCKED -->
+  <section class="slide" data-slide="7">
+    <div class="slide-num">06</div>
+    <div class="slide-kicker" data-i18n="vlad_kicker">PRESIDENTE & CEO · AMAN GROUP</div>
+    <div class="locked-cover vladi-locked">
+      <div class="lock-icon">⚜</div>
+      <h2 data-i18n="vlad_title">ACCESO RESTRINGIDO</h2>
+      <div class="name">Vladislav Doronin</div>
+      <p data-i18n="vlad_locked_msg">La información detallada sobre el Presidente y CEO de Aman Group está protegida bajo acceso confidencial.</p>
+      <button class="enter-btn" id="openPass" data-i18n="vlad_enter">ACCESO PRIVILEGIADO</button>
+      <a href="https://www.vladislavdoronin.com/" target="_blank" rel="noopener" class="vladi-web vladi-web-prominent">
+        <span class="vw-icon">◆</span>
+        <span class="vw-text" data-i18n="vlad_web_label">WEB PERSONAL</span>
+      </a>
+    </div>
+
+    <!-- Vladi revealed content -->
+    <div class="vladi-reveal" style="flex-direction:column;width:100%">
+      <h2 class="slide-title" style="margin-bottom:8px">Vladislav <em>Doronin</em></h2>
+      <div style="font-family:var(--sans);font-size:11px;letter-spacing:0.5em;color:var(--gold);text-transform:uppercase;margin-bottom:20px" data-i18n="vlad_role">Presidente & CEO · Aman Group · OKO Group</div>
+      <div class="divider"></div>
+      <div class="two-col">
+        <div>
+          <div class="timeline">
+            <div class="tl-item">
+              <div class="year">1962</div>
+              <div class="txt" data-i18n="v_t1">Nació el 7 de noviembre en Leningrado (actual San Petersburgo), Unión Soviética.</div>
+            </div>
+            <div class="tl-item">
+              <div class="year">1992</div>
+              <div class="txt" data-i18n="v_t2">Nacionalidad sueca. Actividad profesional entre Europa, EE.UU. y Asia. MBA en Suiza.</div>
+            </div>
+            <div class="tl-item">
+              <div class="year">1993</div>
+              <div class="txt" data-i18n="v_t3">Cofundó Capital Group en Moscú — una de las firmas promotoras más importantes de la región.</div>
+            </div>
+            <div class="tl-item">
+              <div class="year">2014</div>
+              <div class="txt" data-i18n="v_t4">Adquirió Aman Resorts por aproximadamente 358M USD. Asumió control total como Chairman & CEO.</div>
+            </div>
+            <div class="tl-item">
+              <div class="year">Hoy</div>
+              <div class="txt" data-i18n="v_t5">Fundador, presidente y CEO de OKO Group (EE.UU.). Megaproyectos en Miami y Nueva York.</div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="vladi-portrait">
+            <img src="images/VLADI.JPEG" alt="Vladislav Doronin" onerror="this.parentNode.style.display='none'">
+            <div class="caption">VLADISLAV DORONIN</div>
+            <div class="caption-role" data-i18n="vlad_caption_role">Chairman & CEO · Aman Group</div>
+            <a href="https://www.vladislavdoronin.com/" target="_blank" rel="noopener" class="vladi-web">
+              <span class="vw-icon">◆</span>
+              <span class="vw-text">www.vladislavdoronin.com</span>
+            </a>
+          </div>
+          <div class="col-card" style="margin-bottom:18px">
+            <h3 data-i18n="v_exp_h">Expansión bajo su gestión</h3>
+            <p data-i18n="v_exp_t">Diversificación de la cartera: hoteles urbanos de ultra-lujo (Aman New York, Aman Tokyo), residencias privadas, Aman Private Jet, líneas de bienestar y skincare, y el lanzamiento de la marca Janu.</p>
+          </div>
+          <div class="col-card">
+            <h3 data-i18n="v_pat_h">Patrimonio estimado</h3>
+            <p data-i18n="v_pat_t">1.000 – 1.500M USD, con activos concentrados en bienes raíces de lujo, la cadena Aman y una importante colección privada de arte.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Slide 8: MODELO OPERATIVO -->
+  <section class="slide" data-slide="8">
+    <div class="slide-num">07</div>
+    <div class="slide-kicker" data-i18n="op_kicker">ESQUEMA DE COLABORACIÓN</div>
+    <h2 class="slide-title" data-i18n="op_title">Modelo <em>Operativo</em> · HMA</h2>
+    <div class="divider"></div>
+    <div class="two-col">
+      <div class="col-card">
+        <h3 data-i18n="op_partner_h">Socio Desarrollador Local</h3>
+        <p data-i18n="op_partner_t">Aporta el suelo, el capital de desarrollo inmobiliario y financia la construcción de la infraestructura física.</p>
+      </div>
+      <div class="col-card">
+        <h3 data-i18n="op_aman_h">Aman Group</h3>
+        <p data-i18n="op_aman_t">Asume el diseño conceptual y arquitectónico. Firma un HMA a largo plazo. Controla y opera al 100% servicios, personal, estándares y reservas globales a su base VIP.</p>
+      </div>
+    </div>
+    <div style="margin-top:28px;padding:24px 30px;border-left:3px solid var(--gold);background:rgba(212,175,55,0.05)">
+      <p style="font-family:var(--serif);font-style:italic;font-size:18px;color:var(--gold-light);line-height:1.6" data-i18n="op_summary">Para un nuevo resort, el esquema estándar consiste en un acuerdo de licencia de marca y contrato de gestión hotelera internacional, donde Aman garantiza la preservación del ADR, la exclusividad operativa y la captación del segmento de clientes de ultra-lujo a nivel global.</p>
+    </div>
+  </section>
+
+  <!-- Slide 9: CONTACTO -->
+  <section class="slide" data-slide="9">
+    <div class="slide-num">08</div>
+    <div class="slide-kicker" data-i18n="contact_kicker">CANAL CORPORATIVO</div>
+    <h2 class="slide-title" data-i18n="contact_title">Contacto <em>Corporativo</em></h2>
+    <div class="divider"></div>
+    <div class="contact-block">
+      <div class="line"><strong data-i18n="contact_office">Oficina</strong> Aman Group Head Office</div>
+      <div class="line"><strong data-i18n="contact_addr">Dirección</strong> 6th Floor, 14 Curzon Street, Mayfair, London W1J 5HN, United Kingdom</div>
+      <div class="line"><strong data-i18n="contact_phone">Teléfono</strong> +44 20 3861 8600 / +41 41 729 3737</div>
+      <div class="line"><strong data-i18n="contact_email">Email</strong> <a href="mailto:development@aman.com">development@aman.com</a></div>
+      <div class="line"><strong data-i18n="contact_web">Web</strong> <a href="https://www.aman.com" target="_blank">www.aman.com</a></div>
+    </div>
+    <div class="slide-body" style="margin-top:24px">
+      <p data-i18n="contact_note">El canal corporativo se articula a través de sus departamentos de Desarrollo Global y Adquisiciones (Global Development & Acquisitions). En caso de requerir un interlocutor que abra la mesa de negociación previa, las consultoras hoteleras habituales son CBRE, JLL Hotels & Hospitality, o Savills International.</p>
+    </div>
+  </section>
+
+  <!-- Slide 10: LA PORCADA -->
+  <section class="slide" data-slide="10">
+    <div class="slide-num">09</div>
+    <div class="slide-kicker" data-i18n="porc_kicker">PROPUESTA DE DESARROLLO</div>
+    <div class="porcada-hero">
+      <img src="images/ecoresort.png" alt="La Porcada Ecoresort" class="ecoresort-logo" onerror="this.style.display='none'">
+      <h1>LA PORCADA</h1>
+      <div class="sub" data-i18n="porc_sub">ISLA · PACÍFICO DE PANAMÁ · ECORESORT AUTOSUFICIENTE</div>
+      <div class="offer" data-i18n="porc_offer">"Una isla privada en el Pacífico de Panamá, autosuficiente y concebida para ser operada bajo la marca Aman — donde la filosofía del anti-hotel, el Sense of Place y la exclusividad absoluta encuentran su máxima expresión."</div>
+      <div class="stats-row" style="justify-content:center;margin-top:20px">
+        <div class="stat"><div class="num">347 ha</div><div class="lbl" data-i18n="porc_s1">Isla Privada</div></div>
+        <div class="stat"><div class="num">225K m²</div><div class="lbl" data-i18n="porc_s2">Construcción (5%)</div></div>
+        <div class="stat"><div class="num">100%</div><div class="lbl" data-i18n="porc_s3">Autosuficiente</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Slide 11: LA PORCADA DETALLE -->
+  <section class="slide" data-slide="11">
+    <div class="slide-num">10</div>
+    <div class="slide-kicker" data-i18n="porc2_kicker">FICHA DE PRESENTACIÓN · TEASER</div>
+    <h2 class="slide-title" data-i18n="porc2_title">La Porcada · <em>Dossier</em></h2>
+    <div class="divider"></div>
+    <div class="two-col">
+      <div class="col-card">
+        <h3 data-i18n="porc2_loc_h">Isla & Territorio</h3>
+        <p data-i18n="porc2_loc_t">Isla privada en el Pacífico de Panamá. 347 hectáreas con titularidad plena del suelo. Desarrollo de 225.000 m² edificables que representa solo el 5% de la isla, preservando el 95% del entorno natural virgen.</p>
+      </div>
+      <div class="col-card">
+        <h3 data-i18n="porc2_con_h">Autosuficiencia & Recursos</h3>
+        <p data-i18n="porc2_con_t">Ecoresort 100% autosuficiente: manantial de agua propia, generación de energía, ganadería de 300 cabezas Brahman y caballos, huertos orgánicos y pesca propia. Baja densidad, villas matrices, Branded Residences y spa/wellness integrado.</p>
+      </div>
+      <div class="col-card">
+        <h3 data-i18n="porc2_fin_h">Estructura Financiera</h3>
+        <p data-i18n="porc2_fin_t">Promotor: TAKYMA INVESTMENT PIONEER. CAPEX y estructura de capital disponibles. Alcance: Contrato de gestión hotelera (HMA) y licencia de marca Aman.</p>
+      </div>
+      <div class="col-card">
+        <h3 data-i18n="porc2_alc_h">Alcance con Aman</h3>
+        <p data-i18n="porc2_alc_t">Acuerdo de licencia de marca y gestión hotelera internacional. Preservación del ADR. Captación del segmento de clientes de ultra-lujo a nivel global.</p>
+      </div>
+    </div>
+    <div class="cta-heading" data-i18n="cta_heading">ACCESOS DIGITALES AL PROYECTO</div>
+    <div class="cta-row">
+      <a href="https://amanporcada.netlify.app/" target="_blank" rel="noopener" class="cta-btn">
+        <span class="cta-icon">◆</span>
+        <span class="cta-label" data-i18n="cta1_label">CON AMAN</span>
+      </a>
+      <a href="https://marketingporcada.netlify.app/" target="_blank" rel="noopener" class="cta-btn">
+        <span class="cta-icon">◈</span>
+        <span class="cta-label" data-i18n="cta2_label">BANQUEROS & FAMILY OFFICES</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- Slide 12: CIERRE TAKYMA -->
+  <section class="slide cover closing" data-slide="12">
+    <div class="logos">
+      <img src="images/logo.png" alt="Aman" onerror="this.style.display='none'">
+      <img src="images/ecoresort.png" alt="Ecoresort" onerror="this.style.display='none'">
+    </div>
+    <div class="takyma-big">TAKYMA</div>
+    <div class="role" data-i18n="close_role">INVESTMENT · PIONEER · PROMOTOR</div>
+    <div class="copy" data-i18n="close_copy">COPYRIGHT TAKYMA INVESTMENT PIONEER<span class="year">2026</span></div>
+    <div style="font-family:var(--serif);font-style:italic;font-size:16px;color:var(--stone);margin-top:40px;max-width:600px" data-i18n="close_quote">"La Porcada — donde el silencio es el verdadero lujo."</div>
+    <div class="scroll-hint" style="animation:none;opacity:0.5"><span data-i18n="scroll_top">Volver al inicio</span><span class="arrow" id="backToTop" style="cursor:pointer">↑</span></div>
+  </section>
+
+</div>
+
+<!-- Password Modal -->
+<div id="passModal">
+  <div class="pass-box">
+    <div class="lock">⚜</div>
+    <h3 data-i18n="pass_title">ACCESO PRIVILEGIADO</h3>
+    <div class="who" data-i18n="pass_who">VLADISLAV DORONIN · CONFIDENCIAL</div>
+    <input type="password" id="passInput" placeholder="• • • • • • • •" autocomplete="off">
+    <button id="passSubmit" data-i18n="pass_btn">ACCEDER</button>
+    <div class="err" id="passErr"></div>
+    <div class="hint" data-i18n="pass_hint">TAKYMA INVESTMENT PIONEER · 2026</div>
+  </div>
+</div>
+
+<script>
+// ============ I18N DICTIONARY ============
+const I18N = {
+  es: {
+    gate_sub:"Seleccione su idioma · Select your language · Выберите язык",
+    cover_kicker:"PRESENTACIÓN EJECUTIVA · ULTRA-LUJO",
+    cover_sub:"LA PORCADA · ECORESORT",
+    cover_tagline:"\"Un lugar de paz\" — donde la naturaleza, el silencio y la exclusividad se funden en una experiencia sin precedentes.",
+    scroll_hint:"Desplazar para explorar",scroll_top:"Volver al inicio",
+    origin_kicker:"CAPÍTULO I",
+    origin_title:"Origen de la <em>Firma</em>",
+    origin_fund:"Fundación:",origin_fund_t:"Nació en 1988 con la apertura de su primer establecimiento, Amanpuri (que significa \"lugar de paz\"), situado en la isla de Phuket, Tailandia.",
+    origin_creador:"Creador:",origin_creador_t:"Fue fundado por el visionario hotelero indonés-asiático Adrian Zecha, con el objetivo de romper con los grandes complejos hoteleros estandarizados y ofrecer un concepto totalmente revolucionario: la hospitalidad ultra-privada en formato de refugio residencial.",
+    origin_actual:"Actualidad:",origin_actual_t:"Desde 2014, el grupo está bajo el control del inversor y empresario Vladislav Doronin (presidente y consejero delegado de Aman Group).",
+    stat_founded:"Fundación",stat_props:"Propiedades",stat_countries:"Países",
+    janu_kicker:"NUEVA MARCA DE BIENESTAR",janu_em:"— \"Alma\"",
+    janu_p1:"Para complementar la filosofía de calma y aislamiento de Aman, el grupo lanzó Janu (que significa \"alma\" en sánscrito). Mientras que Aman se centra en el retiro, la paz y la introspección, Janu promueve la conexión social, la vitalidad y el dinamismo integral del cuerpo y la mente, incorporando centros de bienestar gigantescos.",
+    janu_flag:"Buque Insignia",janu_flag_t:"Janu Tokyo, en el distrito de Azabudai Hills (Japón). Cuenta con 122 habitaciones y suites y un centro de bienestar de vanguardia de 4.000 m².",
+    janu_pos:"Posición Actual",janu_pos_t:"Aunque hay más proyectos planeados a nivel global, Janu Tokyo continúa siendo el único operando bajo la marca, consolidándola como referente del bienestar de ultra-lujo.",
+    phil_kicker:"FILOSOFÍA EMPRESARIAL",phil_title:"Pilares de la <em>Marca</em>",
+    p1_h:"El Anti-Hotel",p1_t:"Hogar privado. Los espacios están concebidos para que los huéspedes no sientan que están en un hotel comercial, sino en una residencia privada de extrema elegancia.",
+    p2_h:"Baja Densidad",p2_t:"Exclusividad absoluta. Resorts con número muy reducido de habitaciones para asegurar una ratio de personal por cliente altísima.",
+    p3_h:"Sense of Place",p3_t:"Inmersión en el entorno. La arquitectura —diseñada por maestros como Ed Tuttle o Kerry Hill— respeta e integra la cultura local y la naturaleza del destino.",
+    p4_h:"Marca sobre Ocupación",p4_t:"Aman prioriza de forma estricta la integridad de sus tarifas y su exclusividad frente a la maximización de la ocupación por volumen.",
+    model_kicker:"DESARROLLO Y CATEGORÍA",model_title:"Modelo de <em>Negocio</em>",
+    model_cat:"Categoría:",model_cat_t:"Ultra-lujo — segmento superior al lujo convencional, enfocado en clientes de alto poder adquisitivo que buscan total discreción, anonimato y servicio hiper-personalizado.",
+    model_op:"Modelo Operativo:",model_op_t:"Combina la propiedad directa de activos estratégicos con la gestión de marcas y copropiedades en colaboración con socios inmobiliarios e inversores privados de primer nivel.",
+    model_red:"Red Global:",model_red_t:"El portfolio internacional cuenta con aproximadamente 36 propiedades repartidas en cerca de 20 países, incluyendo resorts de playa, retiros en la naturaleza y hoteles urbanos selectos.",
+    stat_cat:"Categoría",stat_hma:"Contrato Gestión",stat_vip:"Cliente Objetivo",
+    props_kicker:"RED GLOBAL",props_title:"Complejos <em>Principales</em>",
+    th_prop:"Complejo",th_loc:"Ubicación",th_cat:"Categoría",th_cap:"Capacidad",
+    r1_l:"Phuket, Tailandia",r1_c:"Resort de Playa / Isla",r1_cap:"~40 pabellones y villas",
+    r2_l:"Courchevel, Francia",r2_c:"Resort Alpino de Lujo",r2_cap:"~31 habitaciones y suites",
+    r3_l:"Ise-Shima, Japón",r3_c:"Onsen · Aguas Termales",r3_cap:"~30 suites y 4 villas",
+    r4_l:"Bali, Indonesia",r4_c:"Resort Cultural / Interior",r4_cap:"~30 suites",
+    r5_l:"Montenegro",r5_c:"Isla fortificada histórica",r5_cap:"~50 habitaciones y suites",
+    r6_l:"Nueva York, EE.UU.",r6_c:"Hotel Urbano Ultra-lujo",r6_cap:"~83 suites",
+    r7_l:"Tokio, Japón",r7_c:"Urbano / Wellness",r7_cap:"122 habitaciones y suites",
+    vlad_kicker:"PRESIDENTE & CEO · AMAN GROUP",
+    vlad_title:"ACCESO RESTRINGIDO",
+    vlad_locked_msg:"La información detallada sobre el Presidente y CEO de Aman Group está protegida bajo acceso confidencial.",
+    vlad_enter:"ACCESO PRIVILEGIADO",
+    vlad_role:"Presidente & CEO · Aman Group · OKO Group",
+    vlad_caption_role:"Presidente & CEO · Aman Group",
+    vlad_web_label:"WEB PERSONAL",
+    v_t1:"Nació el 7 de noviembre en Leningrado (actual San Petersburgo), Unión Soviética.",
+    v_t2:"Nacionalidad sueca. Actividad profesional entre Europa, EE.UU. y Asia. MBA en Suiza.",
+    v_t3:"Cofundó Capital Group en Moscú — una de las firmas promotoras más importantes de la región.",
+    v_t4:"Adquirió Aman Resorts por aproximadamente 358M USD. Asumió control total como Chairman & CEO.",
+    v_t5:"Fundador, presidente y CEO de OKO Group (EE.UU.). Megaproyectos en Miami y Nueva York.",
+    v_exp_h:"Expansión bajo su gestión",v_exp_t:"Diversificación de la cartera: hoteles urbanos de ultra-lujo (Aman New York, Aman Tokyo), residencias privadas, Aman Private Jet, líneas de bienestar y skincare, y el lanzamiento de la marca Janu.",
+    v_pat_h:"Patrimonio estimado",v_pat_t:"1.000 – 1.500M USD, con activos concentrados en bienes raíces de lujo, la cadena Aman y una importante colección privada de arte.",
+    op_kicker:"ESQUEMA DE COLABORACIÓN",op_title:"Modelo <em>Operativo</em> · HMA",
+    op_partner_h:"Socio Desarrollador Local",op_partner_t:"Aporta el suelo, el capital de desarrollo inmobiliario y financia la construcción de la infraestructura física.",
+    op_aman_h:"Aman Group",op_aman_t:"Asume el diseño conceptual y arquitectónico. Firma un HMA a largo plazo. Controla y opera al 100% servicios, personal, estándares y reservas globales a su base VIP.",
+    op_summary:"Para un nuevo resort, el esquema estándar consiste en un acuerdo de licencia de marca y contrato de gestión hotelera internacional, donde Aman garantiza la preservación del ADR, la exclusividad operativa y la captación del segmento de clientes de ultra-lujo a nivel global.",
+    contact_kicker:"CANAL CORPORATIVO",contact_title:"Contacto <em>Corporativo</em>",
+    contact_office:"Oficina",contact_addr:"Dirección",contact_phone:"Teléfono",contact_email:"Email",contact_web:"Web",
+    contact_note:"El canal corporativo se articula a través de sus departamentos de Desarrollo Global y Adquisiciones (Global Development & Acquisitions). En caso de requerir un interlocutor que abra la mesa de negociación previa, las consultoras hoteleras habituales son CBRE, JLL Hotels & Hospitality, o Savills International.",
+    porc_kicker:"PROPUESTA DE DESARROLLO",
+    porc_sub:"ISLA · PACÍFICO DE PANAMÁ · ECORESORT AUTOSUFICIENTE",
+    porc_offer:"\"Una isla privada en el Pacífico de Panamá, autosuficiente y concebida para ser operada bajo la marca Aman — donde la filosofía del anti-hotel, el Sense of Place y la exclusividad absoluta encuentran su máxima expresión.\"",
+    porc_s1:"Isla Privada",porc_s2:"Construcción (5%)",porc_s3:"Autosuficiente",
+    porc2_kicker:"FICHA DE PRESENTACIÓN · TEASER",porc2_title:"La Porcada · <em>Dossier</em>",
+    porc2_loc_h:"Isla & Territorio",porc2_loc_t:"Isla privada en el Pacífico de Panamá. 347 hectáreas con titularidad plena del suelo. Desarrollo de 225.000 m² edificables que representa solo el 5% de la isla, preservando el 95% del entorno natural virgen.",
+    porc2_con_h:"Autosuficiencia & Recursos",porc2_con_t:"Ecoresort 100% autosuficiente: manantial de agua propia, generación de energía, ganadería de 300 cabezas Brahman y caballos, huertos orgánicos y pesca propia. Baja densidad, villas matrices, Branded Residences y spa/wellness integrado.",
+    porc2_fin_h:"Estructura Financiera",porc2_fin_t:"Promotor: TAKYMA INVESTMENT PIONEER. CAPEX y estructura de capital disponibles. Alcance: Contrato de gestión hotelera (HMA) y licencia de marca Aman.",
+    porc2_alc_h:"Alcance con Aman",porc2_alc_t:"Acuerdo de licencia de marca y gestión hotelera internacional. Preservación del ADR. Captación del segmento de clientes de ultra-lujo a nivel global.",
+    cta_heading:"ACCESOS DIGITALES AL PROYECTO",
+    cta1_label:"CON AMAN",cta2_label:"BANQUEROS & FAMILY OFFICES",
+    close_role:"INVESTMENT · PIONEER · PROMOTOR",
+    close_copy:"COPYRIGHT TAKYMA INVESTMENT PIONEER",
+    close_quote:"\"La Porcada — donde el silencio es el verdadero lujo.\"",
+    pass_title:"ACCESO PRIVILEGIADO",pass_who:"VLADISLAV DORONIN · CONFIDENCIAL",
+    pass_btn:"ACCEDER",pass_hint:"TAKYMA INVESTMENT PIONEER · 2026",
+    pass_err_wrong:"Contraseña incorrecta. Inténtelo de nuevo.",
+    brand_sub:"LA PORCADA"
+  },
+  en: {
+    gate_sub:"Seleccione su idioma · Select your language · Выберите язык",
+    cover_kicker:"EXECUTIVE PRESENTATION · ULTRA-LUXURY",
+    cover_sub:"LA PORCADA · ECORESORT",
+    cover_tagline:"\"A place of peace\" — where nature, silence and exclusivity merge into an unprecedented experience.",
+    scroll_hint:"Scroll to explore",scroll_top:"Back to top",
+    origin_kicker:"CHAPTER I",
+    origin_title:"Origin of the <em>Firm</em>",
+    origin_fund:"Founded:",origin_fund_t:"Born in 1988 with the opening of its first property, Amanpuri (meaning \"place of peace\"), located on the island of Phuket, Thailand.",
+    origin_creador:"Creator:",origin_creador_t:"Founded by the visionary Indonesian-Asian hotelier Adrian Zecha, with the aim of breaking away from standardised large hotel complexes and offering a totally revolutionary concept: ultra-private hospitality in a residential refuge format.",
+    origin_actual:"Today:",origin_actual_t:"Since 2014, the group has been under the control of investor and businessman Vladislav Doronin (Chairman and CEO of Aman Group).",
+    stat_founded:"Founded",stat_props:"Properties",stat_countries:"Countries",
+    janu_kicker:"NEW WELLNESS BRAND",janu_em:"— \"Soul\"",
+    janu_p1:"To complement Aman's philosophy of calm and seclusion, the group launched Janu (meaning \"soul\" in Sanskrit). While Aman focuses on retreat, peace and introspection, Janu promotes social connection, vitality and the integral dynamism of body and mind, incorporating giant wellness centres.",
+    janu_flag:"Flagship",janu_flag_t:"Janu Tokyo, in the Azabudai Hills district (Japan). It features 122 rooms and suites and a state-of-the-art wellness centre of 4,000 m².",
+    janu_pos:"Current Position",janu_pos_t:"Although more projects are planned globally, Janu Tokyo remains the only one operating under the brand, consolidating it as a benchmark of ultra-luxury wellness.",
+    phil_kicker:"CORPORATE PHILOSOPHY",phil_title:"Brand <em>Pillars</em>",
+    p1_h:"The Anti-Hotel",p1_t:"Private home. Spaces are designed so guests do not feel they are in a commercial hotel, but in a private residence of extreme elegance.",
+    p2_h:"Low Density",p2_t:"Absolute exclusivity. Resorts with a very limited number of rooms to ensure an exceptionally high staff-to-guest ratio.",
+    p3_h:"Sense of Place",p3_t:"Immersion in the environment. Architecture —designed by masters such as Ed Tuttle or Kerry Hill— respects and integrates the local culture and nature of the destination.",
+    p4_h:"Brand over Occupancy",p4_t:"Aman strictly prioritises the integrity of its rates and exclusivity over maximising occupancy by volume.",
+    model_kicker:"DEVELOPMENT & CATEGORY",model_title:"Business <em>Model</em>",
+    model_cat:"Category:",model_cat_t:"Ultra-luxury — a segment above conventional luxury, focused on high-net-worth clients seeking total discretion, anonymity and hyper-personalised service.",
+    model_op:"Operating Model:",model_op_t:"Combines direct ownership of strategic assets with brand management and co-ownership in collaboration with top-tier real estate partners and private investors.",
+    model_red:"Global Network:",model_red_t:"The international portfolio has approximately 36 properties spread across nearly 20 countries, including beach resorts, nature retreats and select urban hotels.",
+    stat_cat:"Category",stat_hma:"Management Contract",stat_vip:"Target Client",
+    props_kicker:"GLOBAL NETWORK",props_title:"Main <em>Properties</em>",
+    th_prop:"Property",th_loc:"Location",th_cat:"Category",th_cap:"Capacity",
+    r1_l:"Phuket, Thailand",r1_c:"Beach / Island Resort",r1_cap:"~40 pavilions and villas",
+    r2_l:"Courchevel, France",r2_c:"Alpine Luxury Resort",r2_cap:"~31 rooms and suites",
+    r3_l:"Ise-Shima, Japan",r3_c:"Onsen · Hot Springs",r3_cap:"~30 suites and 4 villas",
+    r4_l:"Bali, Indonesia",r4_c:"Cultural / Inland Resort",r4_cap:"~30 suites",
+    r5_l:"Montenegro",r5_c:"Historic fortified island",r5_cap:"~50 rooms and suites",
+    r6_l:"New York, USA",r6_c:"Ultra-luxury Urban Hotel",r6_cap:"~83 suites",
+    r7_l:"Tokyo, Japan",r7_c:"Urban / Wellness",r7_cap:"122 rooms and suites",
+    vlad_kicker:"CHAIRMAN & CEO · AMAN GROUP",
+    vlad_title:"RESTRICTED ACCESS",
+    vlad_locked_msg:"Detailed information about the Chairman and CEO of Aman Group is protected under confidential access.",
+    vlad_enter:"PRIVILEGED ACCESS",
+    vlad_role:"Chairman & CEO · Aman Group · OKO Group",
+    vlad_caption_role:"Chairman & CEO · Aman Group",
+    vlad_web_label:"PERSONAL WEBSITE",
+    v_t1:"Born on November 7 in Leningrad (now St. Petersburg), Soviet Union.",
+    v_t2:"Swedish nationality. Professional activity across Europe, USA and Asia. MBA in Switzerland.",
+    v_t3:"Co-founded Capital Group in Moscow — one of the region's most important development firms.",
+    v_t4:"Acquired Aman Resorts for approximately USD 358M. Assumed total control as Chairman & CEO.",
+    v_t5:"Founder, Chairman and CEO of OKO Group (USA). Megaprojects in Miami and New York.",
+    v_exp_h:"Expansion under his leadership",v_exp_t:"Portfolio diversification: ultra-luxury urban hotels (Aman New York, Aman Tokyo), private residences, Aman Private Jet, wellness and skincare lines, and the launch of the Janu brand.",
+    v_pat_h:"Estimated net worth",v_pat_t:"USD 1.0 – 1.5 billion, with assets concentrated in luxury real estate, the Aman chain and a major private art collection.",
+    op_kicker:"COLLABORATION SCHEME",op_title:"Operating <em>Model</em> · HMA",
+    op_partner_h:"Local Development Partner",op_partner_t:"Provides the land, real estate development capital and finances the construction of the physical infrastructure.",
+    op_aman_h:"Aman Group",op_aman_t:"Assumes conceptual and architectural design. Signs a long-term HMA. Controls and operates 100% of services, staff, standards and global reservations to its VIP base.",
+    op_summary:"For a new resort, the standard scheme consists of a brand licensing agreement and international hotel management contract, where Aman guarantees the preservation of ADR, operational exclusivity and the capture of the ultra-luxury client segment globally.",
+    contact_kicker:"CORPORATE CHANNEL",contact_title:"Corporate <em>Contact</em>",
+    contact_office:"Office",contact_addr:"Address",contact_phone:"Phone",contact_email:"Email",contact_web:"Web",
+    contact_note:"The corporate channel is articulated through its Global Development & Acquisitions departments. If an interlocutor is required to open preliminary negotiations, the usual luxury hospitality advisory firms are CBRE, JLL Hotels & Hospitality, or Savills International.",
+    porc_kicker:"DEVELOPMENT PROPOSAL",
+    porc_sub:"ISLAND · PACIFIC OF PANAMA · SELF-SUFFICIENT ECORESORT",
+    porc_offer:"\"A private island in the Pacific of Panama, self-sufficient and designed to be operated under the Aman brand — where the anti-hotel philosophy, Sense of Place and absolute exclusivity find their highest expression.\"",
+    porc_s1:"Private Island",porc_s2:"Construction (5%)",porc_s3:"Self-Sufficient",
+    porc2_kicker:"PRESENTATION BRIEF · TEASER",porc2_title:"La Porcada · <em>Dossier</em>",
+    porc2_loc_h:"Island & Territory",porc2_loc_t:"Private island in the Pacific of Panama. 347 hectares with full land ownership. Development of 225,000 m² of buildable area representing only 5% of the island, preserving 95% of the pristine natural environment.",
+    porc2_con_h:"Self-Sufficiency & Resources",porc2_con_t:"100% self-sufficient ecoresort: own water spring, energy generation, 300-head Brahman cattle and horses, organic orchards and own fishing. Low density, master villas, Branded Residences and integrated spa/wellness.",
+    porc2_fin_h:"Financial Structure",porc2_fin_t:"Developer: TAKYMA INVESTMENT PIONEER. CAPEX and capital structure available. Scope: Hotel management contract (HMA) and Aman brand licence.",
+    porc2_alc_h:"Scope with Aman",porc2_alc_t:"Brand licensing agreement and international hotel management. Preservation of ADR. Capture of the ultra-luxury client segment globally.",
+    cta_heading:"DIGITAL ACCESS TO THE PROJECT",
+    cta1_label:"WITH AMAN",cta2_label:"BANKERS & FAMILY OFFICES",
+    close_role:"INVESTMENT · PIONEER · DEVELOPER",
+    close_copy:"COPYRIGHT TAKYMA INVESTMENT PIONEER",
+    close_quote:"\"La Porcada — where silence is the true luxury.\"",
+    pass_title:"PRIVILEGED ACCESS",pass_who:"VLADISLAV DORONIN · CONFIDENTIAL",
+    pass_btn:"ACCESS",pass_hint:"TAKYMA INVESTMENT PIONEER · 2026",
+    pass_err_wrong:"Wrong password. Please try again.",
+    brand_sub:"LA PORCADA"
+  },
+  ru: {
+    gate_sub:"Seleccione su idioma · Select your language · Выберите язык",
+    cover_kicker:"ИСПОЛНИТЕЛЬНАЯ ПРЕЗЕНТАЦИЯ · УЛЬТРА-ЛЮКС",
+    cover_sub:"ЛА ПОРКАДА · ЭКОРЕЗОРТ",
+    cover_tagline:"«Место мира» — где природа, тишина и эксклюзивность сливаются в беспрецедентный опыт.",
+    scroll_hint:"Прокрутите для просмотра",scroll_top:"В начало",
+    origin_kicker:"ГЛАВА I",
+    origin_title:"Происхождение <em>Фирмы</em>",
+    origin_fund:"Основание:",origin_fund_t:"Родился в 1988 году с открытием первого объекта Amanpuri (что означает «место мира»), расположенного на острове Пхукет, Таиланд.",
+    origin_creador:"Основатель:",origin_creador_t:"Основан дальновидным индонезийско-азиатским отельером Адрианом Зехой с целью разрушить стандарты крупных гостиничных комплексов и предложить совершенно революционную концепцию: ультра-приватный сервис в формате резиденциального убежища.",
+    origin_actual:"Сегодня:",origin_actual_t:"С 2014 года группа находится под контролем инвестора и бизнесмена Владислава Доронина (председатель и генеральный директор Aman Group).",
+    stat_founded:"Основание",stat_props:"Объекты",stat_countries:"Страны",
+    janu_kicker:"НОВЫЙ БРЕНД ВЕЛНЕСА",janu_em:"— «Душа»",
+    janu_p1:"Чтобы дополнить философию спокойствия и уединения Aman, группа запустила Janu (что означает «душа» на санскрите). В то время как Aman сосредоточен на ретрите, мире и интроспекции, Janu развивает социальную связь, жизненную силу и интегральный динамизм тела и разума, включая гигантские велнес-центры.",
+    janu_flag:"Флагман",janu_flag_t:"Janu Tokyo в районе Азабудай Хиллз (Япония). 122 номера и люкса и передовой велнес-центр площадью 4 000 м².",
+    janu_pos:"Текущая позиция",janu_pos_t:"Хотя глобально планируется больше проектов, Janu Tokyo остается единственным действующим под брендом, закрепляя его как эталон ультра-люкс велнеса.",
+    phil_kicker:"КОРПОРАТИВНАЯ ФИЛОСОФИЯ",phil_title:"Столпы <em>Бренда</em>",
+    p1_h:"Анти-Отель",p1_t:"Частный дом. Пространства задуманы так, чтобы гости не чувствовали себя в коммерческом отеле, а в частной резиденции крайней элегантности.",
+    p2_h:"Низкая плотность",p2_t:"Абсолютная эксклюзивность. Резорты с очень ограниченным числом номеров для обеспечения высочайшего соотношения персонала к гостю.",
+    p3_h:"Sense of Place",p3_t:"Погружение в среду. Архитектура — созданная такими мастерами, как Эд Таттл или Керри Хилл — уважает и интегрирует местную культуру и природу направления.",
+    p4_h:"Бренд важнее загрузки",p4_t:"Aman строго приоритезирует целостность тарифов и эксклюзивность над максимизацией загрузки по объему.",
+    model_kicker:"РАЗВИТИЕ И КАТЕГОРИЯ",model_title:"Бизнес-<em>Модель</em>",
+    model_cat:"Категория:",model_cat_t:"Ультра-люкс — сегмент выше условного люкса, ориентированный на клиентов с высокой покупательной способностью, ищущих полную дискрецию, анонимность и гиперперсонализированный сервис.",
+    model_op:"Операционная модель:",model_op_t:"Сочетает прямое владение стратегическими активами с управлением брендами и совместной собственностью в сотрудничестве с ведущими девелоперскими партнерами и частными инвесторами.",
+    model_red:"Глобальная сеть:",model_red_t:"Международный портфель насчитывает около 36 объектов в почти 20 странах, включая пляжные резорты, ретриты на природе и избранные городские отели.",
+    stat_cat:"Категория",stat_hma:"Контракт управления",stat_vip:"Целевой клиент",
+    props_kicker:"ГЛОБАЛЬНАЯ СЕТЬ",props_title:"Основные <em>Объекты</em>",
+    th_prop:"Объект",th_loc:"Локация",th_cat:"Категория",th_cap:"Вместимость",
+    r1_l:"Пхукет, Таиланд",r1_c:"Пляжный / Островной резорт",r1_cap:"~40 павильонов и вилл",
+    r2_l:"Куршевель, Франция",r2_c:"Альпийский люкс-резорт",r2_cap:"~31 номер и люкс",
+    r3_l:"Исэ-Сима, Япония",r3_c:"Онсен · Термальные источники",r3_cap:"~30 люксов и 4 виллы",
+    r4_l:"Бали, Индонезия",r4_c:"Культурный резорт",r4_cap:"~30 люксов",
+    r5_l:"Черногория",r5_c:"Исторический укрепленный остров",r5_cap:"~50 номеров и люксов",
+    r6_l:"Нью-Йорк, США",r6_c:"Городской ультра-люкс отель",r6_cap:"~83 люкса",
+    r7_l:"Токио, Япония",r7_c:"Городской / Велнес",r7_cap:"122 номера и люкса",
+    vlad_kicker:"ПРЕДСЕДАТЕЛЬ & CEO · AMAN GROUP",
+    vlad_title:"ОГРАНИЧЕННЫЙ ДОСТУП",
+    vlad_locked_msg:"Подробная информация о Председателе и CEO Aman Group защищена конфиденциальным доступом.",
+    vlad_enter:"ПРИВИЛЕГИРОВАННЫЙ ДОСТУП",
+    vlad_role:"Председатель & CEO · Aman Group · OKO Group",
+    vlad_caption_role:"Председатель & CEO · Aman Group",
+    vlad_web_label:"ЛИЧНЫЙ САЙТ",
+    v_t1:"Родился 7 ноября в Ленинграде (ныне Санкт-Петербург), СССР.",
+    v_t2:"Шведское гражданство. Профессиональная деятельность в Европе, США и Азии. MBA в Швейцарии.",
+    v_t3:"Сооснователь Capital Group в Москве — одной из важнейших девелоперских фирм региона.",
+    v_t4:"Приобрел Aman Resorts примерно за 358 млн USD. Взял полный контроль как Chairman & CEO.",
+    v_t5:"Основатель, председатель и CEO OKO Group (США). Мегапроекты в Майами и Нью-Йорке.",
+    v_exp_h:"Расширение под его руководством",v_exp_t:"Диверсификация портфеля: городские отели ультра-люкс (Aman New York, Aman Tokyo), частные резиденции, Aman Private Jet, линии велнеса и skincare, запуск бренда Janu.",
+    v_pat_h:"Оценочное состояние",v_pat_t:"1 000 – 1 500 млн USD, активы сосредоточены в люксовой недвижимости, сети Aman и значительной частной коллекции искусства.",
+    op_kicker:"СХЕМА СОТРУДНИЧЕСТВА",op_title:"Операционная <em>Модель</em> · HMA",
+    op_partner_h:"Локальный девелопер-партнер",op_partner_t:"Предоставляет землю, капитал для девелопмента и финансирует строительство физической инфраструктуры.",
+    op_aman_h:"Aman Group",op_aman_t:"Берет на себя концептуальный и архитектурный дизайн. Подписывает долгосрочный HMA. Контролирует и оперирует на 100% сервисы, персонал, стандарты и глобальные бронирования для VIP-базы.",
+    op_summary:"Для нового резорта стандартная схема состоит из соглашения о лицензировании бренда и международного контракта управления отелем, где Aman гарантирует сохранение ADR, операционную эксклюзивность и привлечение сегмента ультра-люкс клиентов глобально.",
+    contact_kicker:"КОРПОРАТИВНЫЙ КАНАЛ",contact_title:"Корпоративные <em>Контакты</em>",
+    contact_office:"Офис",contact_addr:"Адрес",contact_phone:"Телефон",contact_email:"Email",contact_web:"Сайт",
+    contact_note:"Корпоративный канал реализуется через отделы Global Development & Acquisitions. Если требуется посредник для предварительных переговоров, обычные консалтинговые фирмы — CBRE, JLL Hotels & Hospitality или Savills International.",
+    porc_kicker:"ПРЕДЛОЖЕНИЕ ПО РАЗВИТИЮ",
+    porc_sub:"ОСТРОВ · ТИХИЙ ОКЕАН ПАНАМЫ · САМОДОСТАТОЧНЫЙ ЭКОРЕЗОРТ",
+    porc_offer:"«Частный остров в Тихом океане Панамы, самодостаточный и задуманный для управления под брендом Aman — где философия анти-отеля, Sense of Place и абсолютная эксклюзивность находят свое высшее выражение.»",
+    porc_s1:"Частный остров",porc_s2:"Застройка (5%)",porc_s3:"Самодостаточный",
+    porc2_kicker:"БРИФ ПРЕЗЕНТАЦИИ · ТИЗЕР",porc2_title:"Ла Поркада · <em>Досье</em>",
+    porc2_loc_h:"Остров и Территория",porc2_loc_t:"Частный остров в Тихом океане Панамы. 347 гектаров с полным правом собственности на землю. Застройка 225 000 м², что составляет лишь 5% острова, сохраняя 95% первозданной природной среды.",
+    porc2_con_h:"Самодостаточность и Ресурсы",porc2_con_t:"Самодостаточный экорезорт на 100%: собственный родник воды, генерация энергии, 300 голов скота Брахман и лошади, органические сады и собственная рыбалка. Низкая плотность, мастер-виллы, Branded Residences и интегрированный спа/велнес.",
+    porc2_fin_h:"Финансовая структура",porc2_fin_t:"Девелопер: TAKYMA INVESTMENT PIONEER. CAPEX и структура капитала доступны. Объем: Контракт управления отелем (HMA) и лицензия бренда Aman.",
+    porc2_alc_h:"Объем с Aman",porc2_alc_t:"Соглашение о лицензировании бренда и международное управление отелем. Сохранение ADR. Привлечение сегмента ультра-люкс клиентов глобально.",
+    cta_heading:"ЦИФРОВОЙ ДОСТУП К ПРОЕКТУ",
+    cta1_label:"С AMAN",cta2_label:"БАНКИРЫ & FAMILY OFFICES",
+    close_role:"INVESTMENT · PIONEER · ДЕВЕЛОПЕР",
+    close_copy:"COPYRIGHT TAKYMA INVESTMENT PIONEER",
+    close_quote:"«Ла Поркада — где тишина есть истинный люкс.»",
+    pass_title:"ПРИВИЛЕГИРОВАННЫЙ ДОСТУП",pass_who:"ВЛАДИСЛАВ ДОРОНИН · КОНФИДЕНЦИАЛЬНО",
+    pass_btn:"ВОЙТИ",pass_hint:"TAKYMA INVESTMENT PIONEER · 2026",
+    pass_err_wrong:"Неверный пароль. Попробуйте снова.",
+    brand_sub:"ЛА ПОРКАДА"
+  }
+};
+
+const PASSWORD = "TAKYMA2026";
+let currentLang = "es";
+let vladUnlocked = false;
+
+// ============ APPLY LANGUAGE ============
+function applyLang(lang){
+  currentLang = lang;
+  const dict = I18N[lang];
+  document.querySelectorAll("[data-i18n]").forEach(el=>{
+    const key = el.getAttribute("data-i18n");
+    if(dict[key] !== undefined){
+      el.innerHTML = dict[key];
+    }
+  });
+  document.getElementById("langTag").textContent = lang.toUpperCase();
+  document.documentElement.lang = lang;
+}
+
+// ============ LANGUAGE SELECTION ============
+document.querySelectorAll(".lang-btn").forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    const lang = btn.getAttribute("data-lang");
+    applyLang(lang);
+    const gate = document.getElementById("langGate");
+    gate.style.opacity = "0";
+    setTimeout(()=>{
+      gate.style.display = "none";
+      const stage = document.getElementById("stage");
+      stage.style.display = "block";
+      stage.scrollTop = 0;
+      // Reveal first section
+      const first = document.querySelector('.slide[data-slide="1"]');
+      if(first) first.classList.add("revealed");
+      // Start music (user interaction)
+      const music = document.getElementById("bgMusic");
+      music.volume = 0.45;
+      music.play().catch(()=>{});
+      // Setup scroll observer
+      initScrollReveal();
+      updateProgressBar();
+    }, 900);
+  });
+});
+
+// ============ SCROLL REVEAL (IntersectionObserver) ============
+function initScrollReveal(){
+  const slides = document.querySelectorAll(".slide");
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        e.target.classList.add("revealed");
+      }
+    });
+  }, {threshold:0.15, rootMargin:"0px 0px -10% 0px"});
+  slides.forEach(s=>io.observe(s));
+}
+
+// ============ SCROLL PROGRESS BAR ============
+function updateProgressBar(){
+  const stage = document.getElementById("stage");
+  const bar = document.getElementById("scrollProgress");
+  function onScroll(){
+    const max = stage.scrollHeight - stage.clientHeight;
+    const pct = max > 0 ? (stage.scrollTop / max) * 100 : 0;
+    bar.style.width = pct + "%";
+  }
+  stage.addEventListener("scroll", onScroll, {passive:true});
+  onScroll();
+}
+
+// ============ BACK TO TOP ============
+document.addEventListener("click", (e)=>{
+  if(e.target && e.target.id === "backToTop"){
+    document.getElementById("stage").scrollTo({top:0, behavior:"smooth"});
+  }
+});
+
+// ============ KEYBOARD ============
+document.addEventListener("keydown", e=>{
+  if(document.getElementById("stage").style.display === "block"){
+    if(e.key === "Escape") closeModal();
+    if(e.key === "Home") document.getElementById("stage").scrollTo({top:0, behavior:"smooth"});
+    if(e.key === "End") document.getElementById("stage").scrollTo({top:999999, behavior:"smooth"});
+  }
+});
+
+// ============ PASSWORD MODAL ============
+const passModal = document.getElementById("passModal");
+document.getElementById("openPass").addEventListener("click", ()=>{
+  passModal.classList.add("active");
+  document.getElementById("passInput").focus();
+});
+document.getElementById("passSubmit").addEventListener("click", checkPass);
+document.getElementById("passInput").addEventListener("keypress", e=>{
+  if(e.key === "Enter") checkPass();
+});
+function checkPass(){
+  const val = document.getElementById("passInput").value.trim();
+  const err = document.getElementById("passErr");
+  if(val === PASSWORD){
+    vladUnlocked = true;
+    err.textContent = "";
+    document.querySelector(".vladi-locked").style.display = "none";
+    document.querySelector(".vladi-reveal").classList.add("active");
+    passModal.classList.remove("active");
+    document.getElementById("passInput").value = "";
+  } else {
+    err.textContent = I18N[currentLang].pass_err_wrong;
+    document.getElementById("passInput").value = "";
+    document.getElementById("passInput").focus();
+  }
+}
+function closeModal(){
+  passModal.classList.remove("active");
+}
+
+// ============ MUTE / HOME ============
+let muted = false;
+document.getElementById("btnMute").addEventListener("click", ()=>{
+  const music = document.getElementById("bgMusic");
+  muted = !muted;
+  music.muted = muted;
+  document.getElementById("btnMute").classList.toggle("muted", muted);
+});
+document.getElementById("btnHome").addEventListener("click", ()=>{
+  document.getElementById("stage").style.display = "none";
+  const gate = document.getElementById("langGate");
+  gate.style.display = "flex";
+  gate.style.opacity = "1";
+  // Stop music
+  const music = document.getElementById("bgMusic");
+  music.pause();
+  music.currentTime = 0;
+});
+
+// ============ VIDEO FALLBACK ============
+const vid = document.getElementById("bgVideo");
+vid.addEventListener("error", ()=>{
+  vid.style.display = "none";
+});
+// If video can't load, hide it after timeout
+setTimeout(()=>{
+  if(vid.readyState < 2){
+    // keep fallback gradient visible behind
+  }
+}, 3000);
+
+</script>
+</body>
+</html>
